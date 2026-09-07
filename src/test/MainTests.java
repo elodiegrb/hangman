@@ -12,9 +12,9 @@ public class MainTests {
         String name3 = "@";
         String name4 = "Hello123";
 
-        assertTrue(Main.validatePlayerName(name1), name1);
-        assertFalse(Main.validatePlayerName(name2), name2);
-        assertFalse(Main.validatePlayerName(name3), name3);
-        assertFalse(Main.validatePlayerName(name4), name4);
+        assertTrue(Main.validatePlayerName(name1));
+        assertFalse(Main.validatePlayerName(name2));
+        assertFalse(Main.validatePlayerName(name3));
+        assertFalse(Main.validatePlayerName(name4));
     }
 }
