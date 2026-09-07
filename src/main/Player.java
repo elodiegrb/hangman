@@ -43,7 +43,7 @@ public class Player {
             accuracy = 0.0;
         } else {
             accuracy = (double) totalCorrectGuesses / totalGuesses;
-            accuracy = Math.round(accuracy * 100.0) / 100.0;
+            accuracy = Math.round(accuracy * 100.0);
         }
     }
 
