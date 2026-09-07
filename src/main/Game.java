@@ -53,7 +53,7 @@ public class Game {
                 for (char m : mistakes) {
                     System.out.print(" " + m + " ");
                 }
-                if (!enterLetter(phrase, true, guessingPlayer, otherPlayer)) {
+                if (!enterLetter(phrase, guessingPlayer, otherPlayer)) {
                     break;
                 }
 
@@ -69,9 +69,22 @@ public class Game {
                 }
 
                 if (isSolved(phrase) || mistakesCounter > 5) {
+                    player1.updateAccuracy();
+                    player2.updateAccuracy();
+                    System.out.println();
                     System.out.println(" -- Points -- ");
                     System.out.println(player1.getName() + ": " + player1.getScore());
                     System.out.println(player2.getName() + ": " + player2.getScore());
+                    System.out.println();
+                    System.out.println(" -- Stats -- ");
+                    System.out.println(player1.getName());
+                    System.out.println("Total Guesses: " + player1.getTotalGuesses());
+                    System.out.println("Total Correct Guesses: " + player1.getTotalCorrectGuesses());
+                    System.out.println("Accuracy: " + player1.getAccuracy() + "%");
+                    System.out.println(player2.getName());
+                    System.out.println("Total Guesses: " + player2.getTotalGuesses());
+                    System.out.println("Total Correct Guesses: " + player2.getTotalCorrectGuesses());
+                    System.out.println("Accuracy: " + player2.getAccuracy() + "%");
                     Player tempPlayer = guessingPlayer;
                     guessingPlayer = otherPlayer;
                     otherPlayer = tempPlayer;
@@ -153,7 +166,7 @@ public class Game {
         System.out.println();
     }
 
-    private boolean enterLetter(Phrase phrase, boolean quitReturnsToMainMenu, Player guessingPlayer, Player otherPlayer) {
+    private boolean enterLetter(Phrase phrase, Player guessingPlayer, Player otherPlayer) {
         List<Character> characters = phrase.getCharacters();
         System.out.println();
         System.out.println("Enter letter or command: ");
@@ -180,7 +193,8 @@ public class Game {
                 char l = s.charAt(0);
                 if (characters.contains(l) && !correctGuesses.contains(l)) { //correct guess
                     correctGuesses.add(l);
-                    //update stats
+                    guessingPlayer.incrementTotalGuesses();
+                    guessingPlayer.incrementTotalCorrectGuesses();
                     return true;
                 } else if (characters.contains(l) && correctGuesses.contains(l)) {
                     System.out.println("You've already guessed this letter!");
@@ -189,7 +203,7 @@ public class Game {
                     System.out.println("Wrong letter!");
                     mistakes.add(l);
                     mistakesCounter++;
-                    //update stats
+                    guessingPlayer.incrementTotalGuesses();
                     return true;
                 } else { // already guessed incorrect letter
                     System.out.println("You've already guessed this letter!");
